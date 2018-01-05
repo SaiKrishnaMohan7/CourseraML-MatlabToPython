@@ -1,14 +1,21 @@
+#! usr/bin/env python3 
+""" 
+ex 1 Analogous pythin code for Andrew Ng's Machine Learning course
+converted to python 3
+"""
 from matplotlib import use, cm
 use('TkAgg')
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.mplot3d import axes3d
 from sklearn import linear_model
+from mpl_toolkits.mplot3d import axes3d, Axes3D
+import itertools
 
 from gradientDescent import gradientDescent
 from computeCost import computeCost
 from warmUpExercise import warmUpExercise
-from plotData import plotData
+from plotData import plotData, plotConvergence
 from show import show
 
 ## Machine Learning Online Class - Exercise 1: Linear Regression
@@ -52,7 +59,7 @@ y = data[:, 1]
 # Plot Data
 # Note: You have to complete the code in plotData.py
 print('Plotting Data ...')
-plotData(data)
+plotData(X, y)
 show()
 
 input("Program paused. Press Enter to continue...")
@@ -76,9 +83,14 @@ theta, J_history = gradientDescent(X, y, theta, alpha, iterations)
 print('Theta found by gradient descent: ')
 print('%s %s \n' % (theta[0], theta[1]))
 
+# Plot Convergence
+plotConvergence(J_history, iterations)
+dummy = plt.ylim([4, 7])
+plt.show(block=False)
+
 # Plot the linear fit
 plt.figure()
-plotData(data)
+plotData(X, y)
 plt.plot(X[:, 1], X.dot(theta), '-', label='Linear regression')
 plt.legend(loc='upper right', shadow=True, fontsize='x-large', numpoints=1)
 show()
@@ -94,9 +106,27 @@ print('For population = 70,000, we predict a profit of {:.4f}'.format(predict2*1
 # ============= Part 4: Visualizing J(theta_0, theta_1) =============
 print('Visualizing J(theta_0, theta_1) ...')
 
+fig = plt.figure(figsize=(12,12))
+ax = fig.gca(projection='3d')
+
 # Grid over which we will calculate J
 theta0_vals = np.linspace(-10, 10, X.shape[0])
 theta1_vals = np.linspace(-1, 4, X.shape[0])
+
+myxs, myys, myzs = [], [], []
+for david in theta0_vals:
+    for kaleko in theta1_vals:
+        myxs.append(david)
+        myys.append(kaleko)
+        myzs.append(computeCost(X,y , np.array([[david], [kaleko]])))
+
+scat = ax.scatter(myxs,myys,myzs,c=np.abs(myzs),cmap=plt.get_cmap('YlOrRd'))
+
+plt.xlabel(r'$\theta_0$',fontsize=20)
+plt.ylabel(r'$\theta_1$',fontsize=20)
+plt.title('Cost (Minimization Path Shown in Blue)',fontsize=20)
+plt.plot([x[0] for x in theta_history],[x[1] for x in theta_history],J_history,'bo-')
+plt.show(block=False)
 
 # initialize J_vals to a matrix of 0's
 J_vals=np.array(np.zeros(X.shape[0]).T)
