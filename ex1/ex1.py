@@ -1,6 +1,6 @@
 #! usr/bin/env python3 
 """ 
-ex 1 Analogous pythin code for Andrew Ng's Machine Learning course
+ex 1 Analogous python code for Andrew Ng's Machine Learning course
 converted to python 3
 """
 from matplotlib import use, cm
@@ -181,7 +181,7 @@ print('For population = 35,000, we predict a profit of {:.4f}'.format(predict1*1
 print('For population = 70,000, we predict a profit of {:.4f}'.format(predict2*10000))
 
 plt.figure()
-plotData(data)
+plotData(X, y)
 plt.plot(X[:, 1],  X.dot(regr.coef_), '-', color='black', label='Linear regression wit scikit')
 plt.legend(loc='upper right', shadow=True, fontsize='x-large', numpoints=1)
 show()
