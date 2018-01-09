@@ -70,7 +70,7 @@ theta = np.zeros(2)
 
 # compute and display initial cost
 J = computeCost(X, y, theta)
-print('cost: %0.4f ' % J)
+print(J)
 
 # Some gradient descent settings
 iterations = 1500
@@ -105,68 +105,31 @@ print('For population = 70,000, we predict a profit of {:.4f}'.format(predict2*1
 
 # ============= Part 4: Visualizing J(theta_0, theta_1) =============
 print('Visualizing J(theta_0, theta_1) ...')
+theta0_vals = np.linspace(-10, 10, 100)
+theta1_vals = np.linspace(-1, 4, 100)
 
-fig = plt.figure(figsize=(12,12))
-ax = fig.gca(projection='3d')
+J_vals = np.zeros((np.size(theta0_vals, 0), np.size(theta1_vals, 0)))
 
-# Grid over which we will calculate J
-theta0_vals = np.linspace(-10, 10, X.shape[0])
-theta1_vals = np.linspace(-1, 4, X.shape[0])
+for i in range(np.size(theta0_vals, 0)):
+    for j in range(np.size(theta1_vals, 0)):
+        theta = np.array([theta0_vals[i], theta1_vals[j]])
+        J_vals[i, j] = computeCost(X, y, theta)
 
-myxs, myys, myzs = [], [], []
-for david in theta0_vals:
-    for kaleko in theta1_vals:
-        myxs.append(david)
-        myys.append(kaleko)
-        myzs.append(computeCost(X,y , np.array([[david], [kaleko]])))
 
-scat = ax.scatter(myxs,myys,myzs,c=np.abs(myzs),cmap=plt.get_cmap('YlOrRd'))
-
-plt.xlabel(r'$\theta_0$',fontsize=20)
-plt.ylabel(r'$\theta_1$',fontsize=20)
-plt.title('Cost (Minimization Path Shown in Blue)',fontsize=20)
-plt.plot([x[0] for x in theta_history],[x[1] for x in theta_history],J_history,'bo-')
-plt.show(block=False)
-
-# initialize J_vals to a matrix of 0's
-J_vals=np.array(np.zeros(X.shape[0]).T)
-
-for i in range(theta0_vals.size):
-    col = []
-    for j in range(theta1_vals.size):
-        t = np.array([theta0_vals[i],theta1_vals[j]])
-        col.append(computeCost(X, y, t.T))
-    J_vals=np.column_stack((J_vals,col))
-
-# Because of the way meshgrids work in the surf command, we need to
-# transpose J_vals before calling surf, or else the axes will be flipped
-J_vals = J_vals[:,1:].T
 theta0_vals, theta1_vals = np.meshgrid(theta0_vals, theta1_vals)
-
-# Surface plot
 fig = plt.figure()
 ax = fig.gca(projection='3d')
-ax.plot_surface(theta0_vals, theta1_vals, J_vals, rstride=8, cstride=8, alpha=0.3,
-                cmap=cm.coolwarm, linewidth=0, antialiased=False)
-ax.set_xlabel(r'$\theta_0$')
-ax.set_ylabel(r'$\theta_1$')
-ax.set_zlabel(r'J($\theta$)')
-show()
+ax.plot_surface(theta0_vals, theta1_vals, J_vals.T)
+ax.set_xlabel(r'$\theta$0')
+ax.set_ylabel(r'$\theta$1')
 
-input("Program paused. Press Enter to continue...")
-
-# Contour plot
-plt.figure()
-
-# Plot J_vals as 15 contours spaced logarithmically between 0.01 and 100
-ax = plt.contour(theta0_vals, theta1_vals, J_vals, np.logspace(-2, 3, 20))
-plt.clabel(ax, inline=1, fontsize=10)
-plt.xlabel(r'$\theta_0$')
-plt.ylabel(r'$\theta_1$')
-plt.plot(0.0, 0.0, 'rx', linewidth=2, markersize=10)
-show()
-
-input("Program paused. Press Enter to continue...")
+fig2 = plt.figure()
+ax2 = fig2.add_subplot(111)
+ax2.contour(theta0_vals, theta1_vals, J_vals.T, np.logspace(-2, 3, 20))
+ax2.plot(theta[0], theta[1], 'rx', ms=10, lw=2)
+ax2.set_xlabel(r'$\theta$0')
+ax2.set_ylabel(r'$\theta$1')
+plt.show()
 
 # =============Use Scikit-learn =============
 regr = linear_model.LinearRegression(fit_intercept=False, normalize=True)
