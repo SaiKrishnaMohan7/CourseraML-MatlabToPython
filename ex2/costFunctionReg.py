@@ -1,5 +1,7 @@
-from costFunction import costFunction
+import numpy as np
 
+from costFunction import costFunction
+from sigmoid import sigmoid
 
 def costFunctionReg(theta, X, y, Lambda):
     """
@@ -19,4 +21,5 @@ def costFunctionReg(theta, X, y, Lambda):
 
 # =============================================================
 
+    J = (1.0/m) *np.sum(-y.values.flatten() * np.log( sigmoid(X.dot(theta))) -(1-y).values.flatten() * np.log(1-sigmoid(X.dot(theta)))) + (Lambda/(2.0*m))*np.sum( theta[1:]**2 )
     return J

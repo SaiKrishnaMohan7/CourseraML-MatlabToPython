@@ -1,5 +1,6 @@
 from numpy import asfortranarray, squeeze, asarray
 
+from sigmoid import sigmoid
 from gradientFunction import gradientFunction
 
 
@@ -19,5 +20,6 @@ def gradientFunctionReg(theta, X, y, Lambda):
 
 
 # =============================================================
-
+    htheta = sigmoid(X.dot(theta))
+    grad = 1.0/m* ( X.T.dot(htheta-y) + Lambda * theta)
     return grad
