@@ -11,7 +11,7 @@ def costFunctionReg(theta, X, y, Lambda):
     gradient of the cost w.r.t. to the parameters.
     """
     # Initialize some useful values
-    m = len(y)   # number of training examples
+    m = np.size(y, 0)  # number of training examples
 
 # ====================== YOUR CODE HERE ======================
 # Instructions: Compute the cost of a particular choice of theta.
@@ -20,6 +20,6 @@ def costFunctionReg(theta, X, y, Lambda):
 #               derivatives of the cost w.r.t. each parameter in theta
 
 # =============================================================
-
-    J = (1.0/m) *np.sum(-y.values.flatten() * np.log( sigmoid(X.dot(theta))) -(1-y).values.flatten() * np.log(1-sigmoid(X.dot(theta)))) + (Lambda/(2.0*m))*np.sum( theta[1:]**2 )
+    htheta = sigmoid(X.dot(theta))
+    J = -1/m*(y.dot(np.log(htheta))+(1-y).dot(np.log(1-htheta))) + Lambda/(2*m)*theta[1:].dot(theta[1:])
     return J

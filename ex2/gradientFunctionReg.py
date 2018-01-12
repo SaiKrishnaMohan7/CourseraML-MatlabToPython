@@ -1,4 +1,4 @@
-from numpy import asfortranarray, squeeze, asarray
+import numpy as np
 
 from sigmoid import sigmoid
 from gradientFunction import gradientFunction
@@ -11,7 +11,7 @@ def gradientFunctionReg(theta, X, y, Lambda):
     computes the cost of using theta as the parameter for regularized logistic regression and the
     gradient of the cost w.r.t. to the parameters.
     """
-    m = len(y)   # number of training examples
+    m = np.size(y,0)   # number of training examples
 
 # ====================== YOUR CODE HERE ======================
 # Instructions: Compute the gradient of a particular choice of theta.
@@ -21,5 +21,7 @@ def gradientFunctionReg(theta, X, y, Lambda):
 
 # =============================================================
     htheta = sigmoid(X.dot(theta))
-    grad = 1.0/m* ( X.T.dot(htheta-y) + Lambda * theta)
+    grad = np.zeros(np.size(theta, 0))
+    grad[0] = 1/m * (X[:, 0].dot(htheta - y))
+    grad[1:] = 1.0/m* ( X[:, 1:].T.dot(htheta - y)) + Lambda * theta[1:]/m 
     return grad

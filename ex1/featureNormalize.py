@@ -25,15 +25,10 @@ def featureNormalize(X):
     # Hint: You might find the 'mean' and 'std' functions useful.
     #
 
-    stored_feature_means, stored_feature_stds = [], []
-    Xnorm = X.copy()
-    for icol in range(Xnorm.shape[1]):
-        stored_feature_means.append(np.mean(Xnorm[:,icol]))
-        stored_feature_stds.append(np.std(Xnorm[:,icol]))
-        #Skip the first column
-        if not icol: continue
-        #Faster to not recompute the mean and std again, just used stored values
-        Xnorm[:,icol] = (Xnorm[:,icol] - stored_feature_means[-1])/stored_feature_stds[-1]
+   
 # ============================================================
+    mu = np.mean(X, axis = 0)
+    sigma = np.std(X, axis = 0)
+    X_norm = np.divide(X - mu, sigma)
 
-    return Xnorm, stored_feature_means, stored_feature_stds 
+    return X_norm, mu, sigma 

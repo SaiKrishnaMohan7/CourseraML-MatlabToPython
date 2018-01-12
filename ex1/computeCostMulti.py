@@ -12,8 +12,7 @@ def computeCostMulti(X, y, theta):
 # Instructions: Compute the cost of a particular choice of theta
 #               You should set J to the cost.
 
-    htheta = X.T.dot(X,theta)
-    J = np.sum (1.0/(2*m) * (np.square(htheta - y)))
 # =========================================================================
-
+    htheta = X.dot(theta)
+    J = (htheta-y).dot(htheta-y)/(2*m)
     return J

@@ -10,9 +10,8 @@ def gradientDescentMulti(X, y, theta, alpha, num_iters):
        taking num_iters gradient steps with learning rate alpha
     """
 
-    # Initialize some useful values
-    theta_history = []
-    J_history = []
+    # Initialize some useful values]
+    J_history = np.zeros((num_iters,))
     m = np.size(y, 0)  # number of training examples
 
     for i in range(num_iters):
@@ -27,10 +26,7 @@ def gradientDescentMulti(X, y, theta, alpha, num_iters):
 
 
         # ============================================================
-        htheta = X.T.dot(X, theta)
-        theta = theta - alpha*(1.0/m)*np.dot(X.T, htheta-y)  
-        # Save the cost J in every iteration
-        theta_history.append(theta) 
-        J_history[i] = computeCostMulti(X, y, htheta)
         
-    return theta, theta_history, J_history
+        theta = theta - alpha * (X.T.dot(X.dot(theta) - y)/m)
+        J_history = computeCostMulti(X, y, theta)
+    return theta, J_history

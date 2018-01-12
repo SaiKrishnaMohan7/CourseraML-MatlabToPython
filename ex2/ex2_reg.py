@@ -67,7 +67,7 @@ X = X.apply(mapFeature, axis=1)
 initial_theta = np.zeros(X.shape[1])
 
 # Set regularization parameter lambda to 1
-Lambda = 0.0
+Lambda = 1
 
 # Compute and display initial cost and gradient for regularized logistic
 # regression
