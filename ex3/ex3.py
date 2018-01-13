@@ -4,9 +4,9 @@ import numpy as np
 from matplotlib import use
 use('TkAgg')
 
-from .oneVsAll import oneVsAll
-from .predictOneVsAll import predictOneVsAll
-from .displayData import displayData
+from oneVsAll import oneVsAll
+from predictOneVsAll import predictOneVsAll
+from displayData import displayData
 
 #  Instructions
 #  ------------

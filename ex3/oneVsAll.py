@@ -1,8 +1,8 @@
 import numpy as np
-from scipy.optimize import minimize
+import scipy.optimize as op
 
-from .lrCostFunction import lrCostFunction
-from ex2.gradientFunctionReg import gradientFunctionReg
+from lrCostFunction import lrCostFunction
+from lrGradFunction import lrGradFucntion
 
 
 def oneVsAll(X, y, num_labels, Lambda):
@@ -12,13 +12,13 @@ def oneVsAll(X, y, num_labels, Lambda):
     """
 
 # Some useful variables
-    m, n = X.shape
+    m, n = np.shape(X)
 
 # You need to return the following variables correctly 
     all_theta = np.zeros((num_labels, n + 1))
 
 # Add ones to the X data matrix
-    X = np.column_stack((np.ones((m, 1)), X))
+    X = np.concatenate((np.ones((m,1)), X), axis = 1)
 
 # ====================== YOUR CODE HERE ======================
 # Instructions: You should complete the following code to train num_labels
@@ -35,9 +35,13 @@ def oneVsAll(X, y, num_labels, Lambda):
 #       loop over the different classes.
 
     # Set Initial theta
-    initial_theta = np.zeros((n + 1, 1))
+    
 
-    # This function will return theta and the cost
+    for i in range(num_labels):
+        num = 10 if i == 0 else i
+        initial_theta = np.zeros((n + 1,))
+        result = op.minimize(lrCostFunction, initial_theta, method='BFGS'\
+                    , jac = lrGradFucntion, args=(X, 1*(y == num), Lambda), options = {'maxiter': 50})
 
 
 

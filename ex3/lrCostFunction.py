@@ -1,4 +1,4 @@
-from ex2.costFunctionReg import costFunctionReg
+import numpy as np
 
 def lrCostFunction(theta, X, y, Lambda):
     """computes the cost of using
@@ -19,7 +19,9 @@ def lrCostFunction(theta, X, y, Lambda):
 #       prediction for that example. You can make use of this to vectorize
 #       the cost function and gradient computations. 
 #
-
+    m = size(y ,0)
+    htheta = sigmoid(X.dot(theta))
+    J = -1/m*(y.dot(np.log(htheta))+(1-y).dot(np.log(1-htheta)))+Lambda*(theta[1:].dot(theta[1:]))/(2*m)
 
 
     # =============================================================

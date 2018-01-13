@@ -1,6 +1,5 @@
 import numpy as np
 
-from ex2.sigmoid import sigmoid
 
 def predictOneVsAll(all_theta, X):
     """will return a vector of predictions
@@ -10,13 +9,13 @@ def predictOneVsAll(all_theta, X):
   of values from 1..K (e.g., p = [1 3 1 2] predicts classes 1, 3, 1, 2
   for 4 examples) """
 
-    m = X.shape[0]
+    m = np.size(X,0)
 
     # You need to return the following variables correctly
     p = np.zeros((m, 1))
 
     # Add ones to the X data matrix
-    X = np.column_stack((np.ones((m, 1)), X))
+    X = np.concatenate((np.ones((m, 1)), X), axis=1)
 
 # ====================== YOUR CODE HERE ======================
 # Instructions: Complete the following code to make predictions using
@@ -31,7 +30,7 @@ def predictOneVsAll(all_theta, X):
 #       for each row.
 #       
 
-
+    p = np.argmax(X.dot(all_theta.T), axis=1)
 # =========================================================================
 
-    return p + 1    # add 1 to offset index of maximum in A row
+    return p
