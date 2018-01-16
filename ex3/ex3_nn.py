@@ -21,8 +21,8 @@ import scipy.io
 import numpy as np
 import matplotlib.pyplot as plt
 
-from .displayData import displayData
-from .predict import predict
+from displayData import displayData
+from predict import predict
 
 ## Setup the parameters you will use for this exercise
 input_layer_size  = 400  # 20x20 Input Images of Digits

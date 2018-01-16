@@ -2,6 +2,7 @@ import numpy as np
 
 from sigmoid import sigmoid
 
+
 def lrGradFucntion(theta, X, y, Lambda):
     m = np.size(y, 0)
     htheta = sigmoid(X.dot(theta))

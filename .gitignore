@@ -1,3 +1,5 @@
 # untrack all 2to3 backup files
 *.py.bak
 *.pyc
+.idea
+__pycache__/
