@@ -17,16 +17,16 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 # Reshape nn_params back into the parameters Theta1 and Theta2, the weight matrices
 # for our 2 layer neural network
 # Obtain Theta1 and Theta2 back from nn_params
-    Theta1 = np.reshape(nn_params[:hidden_layer_size * (input_layer_size + 1)],
-                       (hidden_layer_size, input_layer_size + 1), order='F').copy()
+    Theta1 = nn_params[0: hidden_layer*(input_layer_size+1)].\
+    reshape((hidden_layer_size, input_layer_size+!))
 
-    Theta2 = np.reshape(nn_params[hidden_layer_size * (input_layer_size + 1):],
-                       (num_labels, (hidden_layer_size + 1)), order='F').copy()
+    Theta2 = nn_params[(hidden_layer_size*(input_layer_size+1)):].\
+    reshape((num_labels, hidden_layer_size+1))
 
 
 
 # Setup some useful variables
-    m, _ = X.shape
+    m = np.size(X, 0)
 
 
 # ====================== YOUR CODE HERE ======================
@@ -67,8 +67,9 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 
     # =========================================================================
 
-    # Unroll gradient
-    grad = np.hstack((Theta1_grad.T.ravel(), Theta2_grad.T.ravel()))
+    a1 = np.concatenate((np.ones((m,1)), X), axis=1)
+    z2 = a1.dot(Theta1.T);
+    l2 = np.size(z2, 0)
 
 
     return J, grad
