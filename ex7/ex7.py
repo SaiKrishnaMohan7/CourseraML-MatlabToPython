@@ -48,7 +48,7 @@ initial_centroids = np.array([[3, 3], [6, 2], [8, 5]])
 
 # Find the closest centroids for the examples using the
 # initial_centroids
-val, idx = findClosestCentroids(X, initial_centroids)
+idx = findClosestCentroids(X, initial_centroids)
 
 print('Closest centroids for the first 3 examples:')
 print(idx[0:3].tolist())

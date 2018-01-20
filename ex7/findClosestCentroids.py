@@ -8,10 +8,11 @@ def findClosestCentroids(X, centroids):
     """
 
 # Set K
-    K = len(centroids)
+    K, l = len(centroids)
 
 # You need to return the following variables correctly.
     idx = np.zeros(X.shape[0])
+    xtemp = np.tile(x,k)
 
 # ====================== YOUR CODE HERE ======================
 # Instructions: Go over every example, find its closest centroid, and store
@@ -24,6 +25,13 @@ def findClosestCentroids(X, centroids):
 
 
 # =============================================================
+    centeroid_temp = centroids.flatten()
+    xtemp = np.power(xtemp-centeroid_temp, 2)
+    xt = np.zeros((np.size(xtemp, 0), K))
+    for i in range(K):
+        for j in range(l):
+            xt[:, i] = xt[:, i] + xtemp[:, i*l+j]
+    idx = np.argmin(xt, 1) + 1
 
-    return val, idx
+    return idx
 
