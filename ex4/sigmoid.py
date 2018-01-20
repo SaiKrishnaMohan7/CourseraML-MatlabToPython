@@ -8,5 +8,5 @@ def sigmoid(z):
 #               vector or scalar).
 
 # =============================================================
-    g = 1/np.exp(-1*z)
+    g = 1/(1 + np.exp(-1*z))
     return g

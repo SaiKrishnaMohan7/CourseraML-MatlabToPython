@@ -24,6 +24,7 @@ from sigmoidGradient import sigmoidGradient
 from randInitializeWeights import randInitializeWeights
 from checkNNGradients import checkNNGradients
 from displayData import displayData
+from predict import predict
 
 ## Setup the parameters you will use for this exercise
 input_layer_size  = 400  # 20x20 Input Images of Digits
@@ -63,6 +64,7 @@ print('Loading Saved Neural Network Parameters ...')
 data = sio.loadmat('ex4weights.mat')
 Theta1 = data['Theta1']
 Theta2 = data['Theta2']
+print(Theta1)
 y = np.squeeze(y)
 
 # Unroll parameters 

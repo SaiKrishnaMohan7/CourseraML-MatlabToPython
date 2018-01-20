@@ -17,8 +17,8 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 # Reshape nn_params back into the parameters Theta1 and Theta2, the weight matrices
 # for our 2 layer neural network
 # Obtain Theta1 and Theta2 back from nn_params
-    Theta1 = nn_params[0: hidden_layer*(input_layer_size+1)].\
-    reshape((hidden_layer_size, input_layer_size+!))
+    Theta1 = nn_params[0: hidden_layer_size*(input_layer_size+1)].\
+    reshape((hidden_layer_size, input_layer_size+1))
 
     Theta2 = nn_params[(hidden_layer_size*(input_layer_size+1)):].\
     reshape((num_labels, hidden_layer_size+1))
@@ -67,9 +67,32 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 
     # =========================================================================
 
+    # Feed Forward
     a1 = np.concatenate((np.ones((m,1)), X), axis=1)
     z2 = a1.dot(Theta1.T);
-    l2 = np.size(z2, 0)
+    l2 = np.size(z2, 0);
+    a2 = np.concatenate((np.ones((l2, 1)), sigmoid(z2)), axis=1)
+    z3 = a2.dot(Theta2.T)
+    a3 = sigmoid(z3)
+    yt = np.zeros((m, num_labels))
+    yt[np.arange(m), y-1] = 1
+    J = np.sum(-yt*np.log(a3)-(1-yt)*np.log(1-a3))
 
+    # BackProp
+    delta3 = a3-yt
+    delta2 = delta3.dot(Theta2)*sigmoidGradient(np.concatenate((np.ones((l2, 1)), z2), axis=1))
+    theta2_grad = delta3.T.dot(a2)
+    theta1_grad = delta2[:, 1:].T.dot(a1)
 
+    # Gradients
+    J = J/m
+    theta2_grad = theta2_grad/m
+    theta2_grad[:, 1:] = theta2_grad[:, 1:]+ Lambda/m * Theta2[:, 1:]
+    theta1_grad = theta1_grad/m
+    theta1_grad[:, 1:] = theta1_grad[:, 1:]+Lambda/m*Theta1[:, 1:]
+    reg_cost = np.sum(np.power(Theta1[:, 1:], 2)) + np.sum(np.power(Theta2[:, 1:], 2))
+    J = J+1/(2*m)*Lambda*reg_cost
+
+    # Unroll
+    grad = np.concatenate((theta1_grad.flatten(), theta2_grad.flatten()))
     return J, grad
