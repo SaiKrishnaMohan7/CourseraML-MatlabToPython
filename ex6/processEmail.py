@@ -56,7 +56,7 @@ def processEmail(email_contents):
 # ========================== Tokenize Email ===========================
 
 # Output the email to screen as well
-    print '==== Processed Email ====\n'
+    print('==== Processed Email ====\n')
 
 # Process file
     l = 0
@@ -112,13 +112,13 @@ def processEmail(email_contents):
 
         # Print to screen, ensuring that the output lines are not too long
         if (l + len(str) + 1) > 78:
-            print str
+            print(str)
             l = 0
         else:
-            print str,
+            print(str, end=' ')
             l = l + len(str) + 1
 
 # Print footer
-    print '\n========================='
+    print('\n=========================')
     return word_indices
 
