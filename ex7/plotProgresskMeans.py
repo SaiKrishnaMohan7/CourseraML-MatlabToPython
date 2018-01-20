@@ -25,5 +25,5 @@ def plotProgresskMeans(X, centroids, previous, idx, K, i, color):
 # Title
     plt.title('Iteration number %d' % i)
     show()
-    raw_input("Program paused. Press Enter to continue...")
+    input("Program paused. Press Enter to continue...")
 

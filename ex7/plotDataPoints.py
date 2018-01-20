@@ -18,6 +18,6 @@ def plotDataPoints(X, idx):
     # colors=idx
     map = plt.get_cmap("jet")
     idxn = idx.astype('float')/max(idx.astype('float'))
-    colors = map(idxn)
+    colors = list(map(idxn))
     plt.scatter(X[:, 0], X[:, 1], 15, edgecolors=colors, marker='o', facecolors='none', lw=0.5)
     show()
