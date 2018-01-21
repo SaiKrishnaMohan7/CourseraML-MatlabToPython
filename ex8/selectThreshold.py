@@ -12,7 +12,8 @@ def selectThreshold(yval, pval):
     bestF1 = 0
 
     stepsize = (np.max(pval) - np.min(pval)) / 1000.0
-    for epsilon in np.arange(np.min(pval),np.max(pval), stepsize):
+    ietrable = np.arange(np.min(pval), np.max(pval), stepsize).tolist()
+    for epsilon in ietrable:
 
         # ====================== YOUR CODE HERE ======================
         # Instructions: Compute the F1 score of choosing epsilon as the
@@ -24,7 +25,15 @@ def selectThreshold(yval, pval):
         # Note: You can use predictions = (pval < epsilon) to get a binary vector
         #       of 0's and 1's of the outlier predictions
 
-
+        tp = np.sum(np.logical_and(pval < epsilon, yval == 1))
+        fp = np.sum(np.logical_and(pval < epsilon, yval == 0))
+        fn = np.sum(np.logical_and(pval >= epsilon, yval == 1))
+        if tp+fp == 0 or tp+fn == 0:
+            F1 = -1
+        else:
+            prec = tp/(tp+fp)
+            rec = tp/(tp+fn)
+            F1 = 2*prec*rec/(prec+rec)
         # =============================================================
 
         if F1 > bestF1:

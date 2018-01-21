@@ -1,4 +1,6 @@
+import math
 import numpy as np
+import scipy.linalg as la
 
 
 def multivariateGaussian(X, mu, Sigma2):
@@ -9,13 +11,9 @@ def multivariateGaussian(X, mu, Sigma2):
     as the \sigma^2 values of the variances in each dimension (a diagonal
     covariance matrix)
     """
-    k = len(mu)
-
-    if Sigma2.ndim == 1:
-        Sigma2 = np.diag(Sigma2)
-
+    k = np.size(mu, 0)
+    Sigma2 = np.diag(Sigma2)
     X = X - mu
-    p = (2 * np.pi) ** (- k / 2) * np.linalg.det(Sigma2) ** (-0.5) * \
-        np.exp(-0.5 * np.sum(X.dot(np.linalg.pinv(Sigma2))*X, axis=1))
+    p = (2*math.pi)**(-k/2)*la.det(Sigma2)**(-0.5)*np.exp(-0.5*np.sum(X.dot(la.pinv(Sigma2))*X, 1))
 
     return p

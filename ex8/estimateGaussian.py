@@ -9,7 +9,7 @@ def estimateGaussian(X):
       The output is an n-dimensional vector mu, the mean of the data set
       and the variances sigma^2, an n x 1 vector
     """
-    m = len(X)
+    m, n = X.shape
 
     # ====================== YOUR CODE HERE ======================
     # Instructions: Compute the mean of the data and the variances
@@ -18,10 +18,10 @@ def estimateGaussian(X):
     #               should contain variance of the i-th feature.
     #
 
-
-
+    mu = np.sum(X,0)/m
+    sigma = np.sum(np.power(X-mu, 2), 0)/m
 # =============================================================
 
-    return mu, sigma2
+    return mu, sigma
 
 
