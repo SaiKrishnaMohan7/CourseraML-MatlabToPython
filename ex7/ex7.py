@@ -27,7 +27,7 @@ from matplotlib import use, cm
 use('TkAgg')
 import numpy as np
 import scipy.io
-import scipy.misc
+from imageio import imread
 import matplotlib.pyplot as plt
 
 from findClosestCentroids import findClosestCentroids
@@ -97,7 +97,7 @@ max_iters = 10
 # but in practice you want to generate them automatically, such as by
 # settings them to be random examples (as can be seen in
 # kMeansInitCentroids).
-initial_centroids = [[3, 3], [6, 2], [8, 5]]
+initial_centroids = np.array([[3, 3], [6, 2], [8, 5]])
 
 # Run K-Means algorithm. The 'true' at the end tells our function to plot
 # the progress of K-Means
@@ -117,7 +117,7 @@ input("Program paused. Press Enter to continue...")
 print('Running K-Means clustering on pixels from an image.')
 
 #  Load an image of a bird
-A = scipy.misc.imread('bird_small.png')
+A = imread('bird_small.png')
 
 # If imread does not work for you, you can try instead
 #   load ('bird_small.mat')
@@ -156,14 +156,14 @@ input("Program paused. Press Enter to continue...")
 print('Applying K-Means to compress an image.')
 
 # Find closest cluster members
-_, idx = findClosestCentroids(X, centroids)
+idx = findClosestCentroids(X, centroids)
 
 # Essentially, now we have represented the image X as in terms of the
 # indices in idx. 
 
 # We can now recover the image from the indices (idx) by mapping each pixel
 # (specified by it's index in idx) to the centroid value
-X_recovered = np.array([centroids[e] for e in idx])
+X_recovered = centroids[idx-1, :]
 
 # Reshape the recovered image into proper dimensions
 X_recovered = X_recovered.reshape(img_size[0], img_size[1], 3)

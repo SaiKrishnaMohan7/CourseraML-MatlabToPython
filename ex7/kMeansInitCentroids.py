@@ -6,14 +6,14 @@ def kMeansInitCentroids(X, K):
     used with the K-Means on the dataset X
     """
 
-# You should return this values correctly
-    centroids = np.zeros((K, X.shape[1]))
 
 # ====================== YOUR CODE HERE ======================
 # Instructions: You should set centroids to randomly chosen examples from
 #               the dataset X
 #
 
-
+    randidx = np.random.permutation(np.size(X, 0))
+    centroids = X[randidx[0: K], :]
 # =============================================================
+    print('kMeansInit----->', centroids);
     return centroids
