@@ -21,7 +21,7 @@ from matplotlib import use
 use('TkAgg')
 import numpy as np
 import scipy.io
-import scipy.misc
+from imageio import imread
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -32,7 +32,8 @@ from recoverData import recoverData
 from kMeansInitCentroids import kMeansInitCentroids
 from runkMeans import runkMeans
 from plotDataPoints import plotDataPoints
-from ex3.displayData import displayData
+from displayData import displayData
+from drawLine import drawLine
 from show import show
 
 ## ================== Part 1: Load Example Dataset  ===================
@@ -65,13 +66,9 @@ X_norm, mu, sigma = featureNormalize(X)
 #  Run PCA
 U, S, V = pca(X_norm)
 
-#  Compute mu, the mean of the each feature
 
-#  Draw the eigenvectors centered at mean of data. These lines show the
-#  directions of maximum variations in the dataset.
-mu2 = mu + 1.5 * S.dot(U.T)
-plt.plot([mu[0], mu2[0, 0]], [mu[1], mu2[0, 1]], '-k', lw=2)
-plt.plot([mu[0], mu2[1, 0]], [mu[1], mu2[1, 1]], '-k', lw=2)
+drawLine(mu, mu+1.5*S[0]*U[:, 0])
+drawLine(mu, mu+1.5*S[1]*U[:, 1])
 show()
 
 print('Top eigenvector: ')
@@ -195,7 +192,7 @@ input('Program paused. Press Enter to continue...')
 
 # Re-load the image from the previous exercise and run K-Means on it
 # For this to work, you need to complete the K-Means assignment first
-A = scipy.misc.imread('bird_small.png')
+A = imread('bird_small.png')
 
 # If imread does not work for you, you can try instead
 #   load ('bird_small.mat')

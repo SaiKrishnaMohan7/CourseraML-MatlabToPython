@@ -1,3 +1,5 @@
+import numpy as np
+
 def recoverData(Z, U, K):
     """
     recovers an approximation the
@@ -20,5 +22,5 @@ def recoverData(Z, U, K):
 
 
     # =============================================================
-
-    return X_rec
+    X_rec = np.asmatrix(Z).dot(U[:, 0:K].T)
+    return np.asarray(X_rec)

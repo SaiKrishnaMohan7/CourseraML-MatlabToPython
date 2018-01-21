@@ -1,4 +1,5 @@
 import numpy as np
+import numpy.linalg as la
 
 
 def pca(X):
@@ -7,7 +8,7 @@ def pca(X):
     """
 
     # Useful values
-    m, n = X.shape
+    m, n = np.shape(X)
 
     # You need to return the following variables correctly.
 
@@ -20,6 +21,7 @@ def pca(X):
     #       number of examples).
     #
 
-
+    sigma = 1/m*X.T.dot(X)
+    U, S, V = la.svd(sigma)
 # =========================================================================
     return U, S, V
