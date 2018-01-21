@@ -1,5 +1,5 @@
 import numpy as np
-from ex4.computeNumericalGradient import computeNumericalGradient
+from computeNumericalGradient import computeNumericalGradient
 from cofiCostFunc import cofiCostFunc
 
 def checkCostFunction(Lambda=0):

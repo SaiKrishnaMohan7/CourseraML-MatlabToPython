@@ -39,7 +39,15 @@ def cofiCostFunc(params, Y, R, num_users, num_movies, num_features, Lambda):
 
 
     # =============================================================
-
+    J = 1/2*np.sum(R*(X.dot(Theta.T)-Y)**2)+Lambda/2*(np.sum(Theta**2)+np.sum(X**2))
+    
+    for i in range(np.size(X, 0)):
+        idx = R[i, :] == 1
+        X_grad[i, :] = (X[i, :].dot(Theta[idx, :].T)-Y[i, idx]).dot(Theta[idx, :])+Lambda*X[i, :]
+    
+    for j in range(np.size(Theta, 0)):
+        jdx = R[:, j] == 1
+        Theta_grad[j, :] = (Theta[j, :].dot(X[jdx, :].T)-Y[jdx, j].T).dot(X[jdx, :])+Lambda*Theta[j, :]
+    
     grad = np.hstack((X_grad.T.flatten(),Theta_grad.T.flatten()))
-
     return J, grad
